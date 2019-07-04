@@ -10,10 +10,11 @@ router.get('/', async (req, res) => {
     const allUsers = await UserService.getAllUsers();
 
     if (allUsers.length > 0) {
-      util.setSuccess(200, 'Users retrieved', allBooks);
+      util.setSuccess(200, 'Users retrieved', allUsers);
     } else {
       util.setSuccess(200, 'No users found');
     }
+
     return util.send(res);
   } catch (e) {
     util.setError(400, e);
