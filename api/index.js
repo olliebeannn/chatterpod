@@ -1,6 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
 
 const app = express();
 
@@ -16,3 +16,5 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`App up on port ${PORT}`);
 });
+
+export default app;
