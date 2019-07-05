@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import passport from 'passport';
+const cookieSession = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 import database from './server/src/models';
@@ -27,8 +28,8 @@ passport.use(
       callbackURL: '/auth/google/callback'
     },
     async (accessToken, refreshToken, profile, cb) => {
-      console.log(accessToken);
-      console.log('profile', profile);
+      // console.log(accessToken);
+      // console.log('profile', profile);
 
       const newUser = {
         name: profile.displayName,
@@ -45,6 +46,13 @@ passport.use(
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [process.env.cookieKey]
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -68,7 +76,13 @@ app.get(
 );
 
 app.get('/currentUser', (req, res) => {
+  console.log(req.session);
   res.send(req.user);
+});
+
+app.get('/api/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
 });
 
 app.use('/users', userRoutes);
