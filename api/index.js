@@ -28,8 +28,8 @@ passport.use(
       callbackURL: '/auth/google/callback'
     },
     async (accessToken, refreshToken, profile, cb) => {
-      console.log(accessToken);
-      console.log('profile', profile);
+      // console.log(accessToken);
+      // console.log('profile', profile);
 
       const newUser = {
         name: profile.displayName,
