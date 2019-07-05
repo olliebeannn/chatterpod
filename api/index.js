@@ -29,12 +29,16 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, cb) => {
       // console.log(accessToken);
-      // console.log('profile', profile);
+      console.log('profile', profile);
 
       const newUser = {
         name: profile.displayName,
         email: profile.emails[0].value
       };
+
+      // if (profile.photos) {
+      //   newUser.photo = profile.photos[0].value;
+      // }
 
       const user = await UserService.createUser(newUser);
       console.log(user);
