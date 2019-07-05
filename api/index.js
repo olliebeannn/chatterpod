@@ -32,11 +32,12 @@ app.get('/', (req, res) => {
   res.send('Hello world!');
 });
 
-app.get('/auth/google', (req, res) => {
+app.get(
+  '/auth/google',
   passport.authenticate('google', {
     scope: ['profile', 'email']
-  });
-});
+  })
+);
 
 app.use('/users', userRoutes);
 
