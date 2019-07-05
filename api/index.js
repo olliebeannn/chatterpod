@@ -4,11 +4,20 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-// import database from './server/src/models';
+import database from './server/src/models';
+import UserService from './server/services/UserService';
 import userRoutes from './server/routes/UserRoutes';
 
 const PORT = process.env.PORT | 5000;
 const app = express();
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  UserService.findUserById(id).then(user => done(null, user));
+});
 
 passport.use(
   new GoogleStrategy(
@@ -17,8 +26,19 @@ passport.use(
       clientSecret: process.env.googleClientSecret,
       callbackURL: '/auth/google/callback'
     },
-    (accessToken, refreshToken, profile, cb) => {
+    async (accessToken, refreshToken, profile, cb) => {
       console.log(accessToken);
+      console.log('profile', profile);
+
+      const newUser = {
+        name: profile.displayName,
+        email: profile.emails[0].value
+      };
+
+      const user = await UserService.createUser(newUser);
+      console.log(user);
+
+      cb(null, user);
     }
   )
 );
@@ -38,6 +58,18 @@ app.get(
     scope: ['profile', 'email']
   })
 );
+
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google'),
+  (req, res) => {
+    res.redirect('/');
+  }
+);
+
+app.get('/currentUser', (req, res) => {
+  res.send(req.user);
+});
 
 app.use('/users', userRoutes);
 

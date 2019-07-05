@@ -31,7 +31,7 @@ router.post('/new', async (req, res) => {
   const newUser = req.body;
 
   try {
-    const createdUser = await UserService.createNewUser(newUser);
+    const createdUser = await UserService.createUser(newUser);
     util.setSuccess(201, 'User created!', createdUser);
     return util.send(res);
   } catch (e) {

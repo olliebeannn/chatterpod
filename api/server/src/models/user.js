@@ -6,13 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
-    googleId: {
-      type: DataTypes.INTEGER
-    },
-    facebookId: {
-      type: DataTypes.INTEGER
+      allowNull: false,
+      unique: true
     }
   });
   return User;

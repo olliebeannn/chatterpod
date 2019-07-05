@@ -9,9 +9,49 @@ class UserService {
     }
   }
 
-  static async createNewUser(newUser) {
+  static async findUserByEmail(email) {
     try {
-      return await database.User.create(newUser);
+      const existingUser = await database.User.findOne({
+        where: { email: email }
+      });
+
+      if (existingUser) {
+        return existingUser;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  static async findUserById(id) {
+    try {
+      const existingUser = await database.User.findOne({
+        where: { id: id }
+      });
+
+      if (existingUser) {
+        return existingUser;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  static async createUser(newUser) {
+    try {
+      const existingUser = await database.User.findOne({
+        where: { email: newUser.email }
+      });
+
+      if (existingUser) {
+        return existingUser;
+      } else {
+        return await database.User.create(newUser);
+      }
     } catch (e) {
       throw e;
     }

@@ -14,12 +14,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      googleId: {
-        type: Sequelize.INTEGER
-      },
-      facebookId: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
