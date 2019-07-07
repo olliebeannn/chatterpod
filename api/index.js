@@ -5,8 +5,8 @@ import passport from 'passport';
 const cookieSession = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-import database from './server/src/models';
-import UserService from './server/services/UserService';
+// import database from './server/src/models';
+// import UserService from './server/services/UserService';
 import userRoutes from './server/routes/UserRoutes';
 import authRoutes from './server/routes/AuthRoutes';
 
@@ -51,7 +51,6 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -59,10 +58,12 @@ app.use(
   })
 );
 
+// passport config
 import './server/config/passport';
 app.use(passport.initialize());
 app.use(passport.session());
 
+// test route from home
 app.get('/', (req, res) => {
   res.send('Hello world!');
 });
@@ -81,16 +82,6 @@ app.get('/', (req, res) => {
 //     res.redirect('/');
 //   }
 // );
-
-app.get('/currentUser', (req, res) => {
-  console.log(req.session);
-  res.send(req.user);
-});
-
-app.get('/api/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
-});
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);

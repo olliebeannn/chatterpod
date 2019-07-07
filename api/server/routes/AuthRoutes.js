@@ -19,4 +19,14 @@ router.get('/google/callback', passport.authenticate('google'), (req, res) => {
   res.redirect('/');
 });
 
+router.get('/currentUser', (req, res) => {
+  // console.log(req.session);
+  res.send(req.user);
+});
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
 export default router;
