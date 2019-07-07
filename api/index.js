@@ -9,6 +9,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 // import UserService from './server/services/UserService';
 import userRoutes from './server/routes/UserRoutes';
 import authRoutes from './server/routes/AuthRoutes';
+import podcastRoutes from './server/routes/PodcastRoutes';
 
 const PORT = process.env.PORT | 5000;
 const app = express();
@@ -85,6 +86,7 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
+app.use('/podcasts', podcastRoutes);
 
 app.listen(PORT, () => {
   console.log(`App up on port ${PORT}`);
