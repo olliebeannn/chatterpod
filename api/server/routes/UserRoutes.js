@@ -50,6 +50,31 @@ router.post('/new', async (req, res) => {
 
 // FUTURE ROUTES
 // GET /:id - pull details for that user if found
+router.get('/:id', async (req, res) => {
+  if (/\D+/.test(req.params.id)) {
+    util.setError(
+      400,
+      `User ID is not formatted correctly; user IDs are numbers`
+    );
+    return util.send(res);
+  }
+
+  try {
+    const existingUser = await UserService.findUserById(req.params.id);
+
+    if (!existingUser) {
+      util.setError(404, `Can't find user`);
+      return util.send(res);
+    }
+
+    util.setSuccess(200, 'Found user', existingUser);
+    return util.send(res);
+  } catch (e) {
+    util.setError(400, e);
+    return util.send(res);
+  }
+});
+
 // GET /:id/podcasts - pull saved podcasts associated with this user
 
 export default router;
