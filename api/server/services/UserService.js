@@ -43,15 +43,7 @@ class UserService {
 
   static async createUser(newUser) {
     try {
-      const existingUser = await database.User.findOne({
-        where: { email: newUser.email }
-      });
-
-      if (existingUser) {
-        return existingUser;
-      } else {
-        return await database.User.create(newUser);
-      }
+      return await database.User.create(newUser);
     } catch (e) {
       throw e;
     }

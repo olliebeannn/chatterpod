@@ -32,9 +32,16 @@ router.post('/new', async (req, res) => {
   const newUser = req.body;
 
   try {
-    const createdUser = await UserService.createUser(newUser);
-    util.setSuccess(201, 'User created!', createdUser);
-    return util.send(res);
+    const existingUser = await UserService.findUserByEmail(newUser.email);
+
+    if (existingUser) {
+      util.setSuccess(200, 'User already exists', existingUser);
+      return util.send(res);
+    } else {
+      const createdUser = await UserService.createUser(newUser);
+      util.setSuccess(201, 'User created!', createdUser);
+      return util.send(res);
+    }
   } catch (e) {
     util.setError(400, e);
     return util.send(res);
