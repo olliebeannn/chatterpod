@@ -1,21 +1,21 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('user_podcast', {
+    return queryInterface.createTable('user_podcasts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      UserId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
           key: 'id'
         }
       },
-      podcastId: {
+      PodcastId: {
         type: Sequelize.STRING,
         references: {
           model: 'Podcasts',
@@ -33,6 +33,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('user_podcast');
+    return queryInterface.dropTable('user_podcasts');
   }
 };

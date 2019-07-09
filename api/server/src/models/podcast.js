@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   Podcast.associate = function(models) {
     // associations can be defined here
     Podcast.belongsToMany(models.User, {
-      through: 'user_podcast'
+      through: 'user_podcast',
+      as: 'User'
     });
   };
   return Podcast;
