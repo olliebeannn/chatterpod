@@ -55,4 +55,9 @@ router.post('/new', async (req, res) => {
   }
 });
 
+//possible future routes
+
+// GET /:id - get this podcast's details if they exist; pull from API if not (and cache?)
+// POST /:id - save this podcast to user's favourites, cache if not in DB already
+
 export default router;

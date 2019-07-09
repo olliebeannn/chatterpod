@@ -17,8 +17,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     }
   });
-  // Podcast.associate = function(models) {
-  //   // associations can be defined here
-  // };
+  Podcast.associate = function(models) {
+    // associations can be defined here
+    Podcast.belongsToMany(models.User, {
+      through: 'user_podcast',
+      as: 'user'
+    });
+  };
   return Podcast;
 };

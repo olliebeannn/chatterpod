@@ -22,6 +22,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Update route to separate case of user already existing vs creating new
 router.post('/new', async (req, res) => {
   if (!req.body.name | !req.body.email) {
     util.setError(400, 'Please provide complete user details');
@@ -39,5 +40,9 @@ router.post('/new', async (req, res) => {
     return util.send(res);
   }
 });
+
+// FUTURE ROUTES
+// GET /:id - pull details for that user if found
+// GET /:id/podcasts - pull saved podcasts associated with this user
 
 export default router;
