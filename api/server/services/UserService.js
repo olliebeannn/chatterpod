@@ -41,6 +41,27 @@ class UserService {
     }
   }
 
+  static async findUserPodcastsById(id) {
+    try {
+      console.log('findUserPodcastsById');
+
+      const userData = await database.User.findOne({
+        where: { id: id },
+        include: ['podcast']
+      });
+
+      console.log(userData);
+
+      if (userData) {
+        return userData;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
   static async createUser(newUser) {
     try {
       return await database.User.create(newUser);
