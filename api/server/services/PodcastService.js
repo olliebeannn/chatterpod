@@ -20,17 +20,10 @@ class PodcastService {
     }
   }
 
+  // Doesn't check for existence of podcast before creating; use findPodcastById first
   static async createPodcast(newPodcast) {
     try {
-      //   const existingPodcast = await Podcast.findOne({
-      //     where: { podcastId: newPodcast.podcastId }
-      //   });
-      //
-      //   if (existingPodcast) {
-      //     return existingPodcast;
-      //   } else {
       return await Podcast.create(newPodcast);
-      // }
     } catch (e) {
       throw e;
     }

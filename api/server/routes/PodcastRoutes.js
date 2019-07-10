@@ -65,8 +65,32 @@ router.post('/new', async (req, res) => {
 });
 
 //possible future routes
-
 // GET /:id - get this podcast's details if they exist; pull from API if not (and cache?)
+router.get('/:id', async (req, res) => {
+  if (/\W+/.test(req.params.id)) {
+    util.setError(
+      400,
+      `PodcastID is not formatted correctly; it should only contain alphanumeric chars`
+    );
+    return util.send(res);
+  }
+
+  try {
+    const podcastData = await PodcastService.findPodcastById(req.params.id);
+
+    if (!podcastData) {
+      util.setError(404, `No podcast found with that id`);
+      return util.send(res);
+    }
+
+    util.setSuccess(200, `Found podcast data`, podcastData);
+    return util.send(res);
+  } catch (e) {
+    util.setError(400, e);
+    return util.send(res);
+  }
+});
+
 // POST /:id - save this podcast to user's favourites, cache if not in DB already
 
 export default router;

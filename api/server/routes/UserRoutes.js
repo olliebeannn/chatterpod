@@ -48,8 +48,7 @@ router.post('/new', async (req, res) => {
   }
 });
 
-// FUTURE ROUTES
-// GET /:id - pull details for that user if found
+// GET /:id - pull details for user by id if found
 router.get('/:id', async (req, res) => {
   if (/\D+/.test(req.params.id)) {
     util.setError(
@@ -86,14 +85,10 @@ router.get('/:id/podcasts', async (req, res) => {
   }
 
   try {
-    console.log('working!');
-
     const userData = await UserService.findUserPodcastsById(req.params.id);
 
-    console.log(userData);
-
     if (!userData) {
-      util.setError(404, `Couldn't find data for that user`);
+      util.setError(404, `No user found with that id`);
       return util.send(res);
     }
 
