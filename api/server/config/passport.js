@@ -4,11 +4,11 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 import UserService from '../services/UserService';
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user.userId);
 });
 
-passport.deserializeUser((id, done) => {
-  UserService.findUserById(id).then(user => done(null, user));
+passport.deserializeUser((userId, done) => {
+  UserService.findUserById(userId).then(user => done(null, user));
 });
 
 passport.use(
@@ -19,9 +19,6 @@ passport.use(
       callbackURL: '/auth/google/callback'
     },
     async (accessToken, refreshToken, profile, cb) => {
-      // console.log(accessToken);
-      // console.log('profile', profile);
-
       const newUser = {
         name: profile.displayName,
         email: profile.emails[0].value
@@ -31,10 +28,14 @@ passport.use(
         newUser.photo = profile.photos[0].value;
       }
 
-      const user = await UserService.createUser(newUser);
-      console.log(user);
+      const existingUser = await UserService.findUserByEmail(newUser.email);
 
-      cb(null, user);
+      if (existingUser) {
+        cb(null, existingUser);
+      } else {
+        const user = await UserService.createUser(newUser);
+        cb(null, user);
+      }
     }
   )
 );

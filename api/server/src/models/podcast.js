@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Podcast = sequelize.define('Podcast', {
-    id: {
+  const Podcast = sequelize.define('podcast', {
+    podcastId: {
       type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false
@@ -10,18 +10,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    thumbnail: {
-      type: DataTypes.STRING
-    },
-    website: {
-      type: DataTypes.STRING
-    }
+    thumbnail: DataTypes.STRING,
+    website: DataTypes.STRING
   });
   Podcast.associate = function(models) {
     // associations can be defined here
-    Podcast.belongsToMany(models.User, {
+    Podcast.belongsToMany(models.user, {
       through: 'user_podcast',
-      as: 'User'
+      foreignKey: 'podcastId',
+      as: 'user'
     });
   };
   return Podcast;

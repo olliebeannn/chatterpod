@@ -1,9 +1,10 @@
 import database from '../src/models';
+const User = database.user;
 
 class UserService {
   static async getAllUsers() {
     try {
-      return await database.User.findAll();
+      return await User.findAll();
     } catch (e) {
       throw e;
     }
@@ -11,7 +12,7 @@ class UserService {
 
   static async findUserByEmail(email) {
     try {
-      const existingUser = await database.User.findOne({
+      const existingUser = await User.findOne({
         where: { email: email }
       });
 
@@ -27,8 +28,8 @@ class UserService {
 
   static async findUserById(id) {
     try {
-      const existingUser = await database.User.findOne({
-        where: { id: id }
+      const existingUser = await User.findOne({
+        where: { userId: id }
       });
 
       if (existingUser) {
@@ -45,9 +46,9 @@ class UserService {
     try {
       console.log('findUserPodcastsById');
 
-      const userData = await database.User.findOne({
-        where: { id: id },
-        include: ['Podcast']
+      const userData = await User.findOne({
+        where: { userId: id },
+        include: ['podcast']
       });
 
       console.log('userData', userData);
@@ -64,7 +65,7 @@ class UserService {
 
   static async createUser(newUser) {
     try {
-      return await database.User.create(newUser);
+      return await User.create(newUser);
     } catch (e) {
       throw e;
     }

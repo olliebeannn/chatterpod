@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/new', async (req, res) => {
-  if (!req.body.id | !req.body.title) {
+  if (!req.body.podcastId | !req.body.title) {
     util.setError(
       400,
       'You must include an ID and title to create save a podcast'
@@ -37,11 +37,20 @@ router.post('/new', async (req, res) => {
   }
 
   const newPodcast = req.body;
-
   console.log(newPodcast);
 
   try {
+    const existingPodcast = await PodcastService.findPodcastById(
+      newPodcast.podcastId
+    );
+
+    if (existingPodcast) {
+      util.setSuccess(201, 'Podcast already exists!', existingPodcast);
+      return util.send(res);
+    }
+
     const createdPodcast = await PodcastService.createPodcast(newPodcast);
+
     if (createdPodcast) {
       util.setSuccess(201, 'Podcast created!', createdPodcast);
       return util.send(res);

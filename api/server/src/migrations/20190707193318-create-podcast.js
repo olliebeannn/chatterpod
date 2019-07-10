@@ -1,8 +1,8 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Podcasts', {
-      id: {
+    return queryInterface.createTable('podcasts', {
+      podcastId: {
         type: Sequelize.STRING,
         primaryKey: true,
         allowNull: false
@@ -28,6 +28,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Podcasts');
+    return queryInterface.dropTable('podcasts');
   }
 };

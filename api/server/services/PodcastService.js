@@ -1,9 +1,20 @@
 import database from '../src/models';
+const Podcast = database.podcast;
 
 class PodcastService {
   static async getAllPodcasts() {
     try {
-      return await database.Podcast.findAll();
+      return await Podcast.findAll();
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  static async findPodcastById(podcastId) {
+    try {
+      return await Podcast.findOne({
+        where: { podcastId: podcastId }
+      });
     } catch (e) {
       throw e;
     }
@@ -11,15 +22,15 @@ class PodcastService {
 
   static async createPodcast(newPodcast) {
     try {
-      const existingPodcast = await database.Podcast.findOne({
-        where: { id: newPodcast.id }
-      });
-
-      if (existingPodcast) {
-        return existingPodcast;
-      } else {
-        return await database.Podcast.create(newPodcast);
-      }
+      //   const existingPodcast = await Podcast.findOne({
+      //     where: { podcastId: newPodcast.podcastId }
+      //   });
+      //
+      //   if (existingPodcast) {
+      //     return existingPodcast;
+      //   } else {
+      return await Podcast.create(newPodcast);
+      // }
     } catch (e) {
       throw e;
     }
