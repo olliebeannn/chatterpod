@@ -48,7 +48,7 @@ class UserService {
 
       const userData = await User.findOne({
         where: { userId: id },
-        include: ['podcast']
+        include: ['podcasts']
       });
 
       console.log('userData', userData);

@@ -17,8 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Podcast.belongsToMany(models.user, {
       through: 'user_podcast',
-      foreignKey: 'podcastId',
-      as: 'user'
+      foreignKey: 'podcastId'
     });
   };
   return Podcast;

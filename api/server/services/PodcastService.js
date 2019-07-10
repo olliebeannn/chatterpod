@@ -28,6 +28,19 @@ class PodcastService {
       throw e;
     }
   }
+
+  // Doesn't check if userId exists; should do that in controller or route
+  static async savePodcastToUser(podcastId, userId) {
+    try {
+      const podcast = await Podcast.findOne({
+        where: { podcastId: podcastId }
+      });
+      // NEEDS error handling on if association already exists
+      return await podcast.addUser(userId);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 export default PodcastService;

@@ -92,5 +92,50 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST /:id - save this podcast to user's favourites, cache if not in DB already
+router.get('/:id/save', async (req, res) => {
+  // Check the podcastId is well formatted
+  if (/\W+/.test(req.params.id)) {
+    util.setError(
+      400,
+      `PodcastID is not formatted correctly; it should only contain alphanumeric chars`
+    );
+    return util.send(res);
+  }
+
+  // Check there is a logged in user
+  if (!req.user) {
+    util.setError(400, `No user logged in, can't save podcast`);
+    return util.send(res);
+  }
+
+  try {
+    // Check the podcast actually exists
+    const podcastData = await PodcastService.findPodcastById(req.params.id);
+
+    if (!podcastData) {
+      util.setError(404, `No podcast found with that id`);
+      return util.send(res);
+    }
+
+    // Create an association between podcast and user
+    console.log('made it to attempt to save podcast');
+    const savedPodcast = await PodcastService.savePodcastToUser(
+      podcastData.podcastId,
+      req.user.userId
+    );
+    console.log('made it through funciton call', savedPodcast);
+
+    if (savedPodcast) {
+      util.setSuccess(200, `Saved podcast for user`, savedPodcast);
+      util.send(res);
+    }
+
+    util.setError(400, `Error saving podcast to user`);
+    util.send(res);
+  } catch (e) {
+    util.setError(400, e);
+    return util.send(res);
+  }
+});
 
 export default router;
