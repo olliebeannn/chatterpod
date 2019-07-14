@@ -7,11 +7,11 @@ const util = new Util();
 
 router.get('/', async (req, res) => {
   try {
-    console.log(PodcastService.getAllPodcasts);
+    // console.log(PodcastService.getAllPodcasts);
 
     const allPodcasts = await PodcastService.getAllPodcasts();
 
-    console.log(allPodcasts);
+    // console.log(allPodcasts);
 
     if (allPodcasts.length > 0) {
       util.setSuccess(200, 'Podcasts retrieved', allPodcasts);
@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 
     return util.send(res);
   } catch (e) {
-    console.log("there's an error!");
+    console.log('error getting all podcasts!');
 
     util.setError(400, e);
     return util.send(res);
