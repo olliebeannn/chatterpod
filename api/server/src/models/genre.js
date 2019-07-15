@@ -14,8 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     }
   });
-  // Genre.associate = function(models) {
-  //   // associations can be defined here
-  // };
+  Genre.associate = function(models) {
+    // associations can be defined here
+    Genre.belongsToMany(models.podcast, {
+      through: 'podcast_genre',
+      foreignKey: 'genreId'
+    });
+  };
   return Genre;
 };

@@ -13,7 +13,8 @@ class PodcastService {
   static async findPodcastById(podcastId) {
     try {
       return await Podcast.findOne({
-        where: { podcastId: podcastId }
+        where: { podcastId: podcastId },
+        include: ['genres']
       });
     } catch (e) {
       throw e;
