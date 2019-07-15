@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING
     },
-    genreParentId: {
+    parentGenreId: {
       type: DataTypes.INTEGER
     }
   });

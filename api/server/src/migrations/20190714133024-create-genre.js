@@ -11,7 +11,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      genreParentId: {
+      parentGenreId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
