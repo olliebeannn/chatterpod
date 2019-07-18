@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import PodcastService from '../services/PodcastService';
 import UserService from '../services/UserService';
 import Util from '../utils/Util';
@@ -157,6 +159,25 @@ class PodcastController {
       return util.send(res);
     }
     // res.send(200, 'PLACEHOLDER FOR GET SAVED PODCASTS ROUTE');
+  }
+
+  static async getTopPodcasts(req, res) {
+    try {
+      let response = await axios.get(
+        'https://listen-api.listennotes.com/api/v2/best_podcasts?region=us',
+        {
+          headers: {
+            'X-ListenAPI-Key': process.env.listenAPIKey
+          }
+        }
+      );
+      util.setSuccess(200, 'Got top podcasts', response.data.podcasts);
+      return util.send(res);
+    } catch (e) {
+      console.log('Error with request to get top podcasts', e);
+      util.setError(400, 'There was a problem getting top podcasts');
+      return util.send(res);
+    }
   }
 }
 

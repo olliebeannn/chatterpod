@@ -9,9 +9,7 @@ router.get('/', PodcastController.getAllPodcasts);
 router.get('/saved', PodcastController.getSavedPodcasts);
 
 // Get top 20 podcasts from Listen API
-router.get('/top', (req, res) => {
-  res.send('PLACEHOLDER for get top podcasts!');
-});
+router.get('/top', PodcastController.getTopPodcasts);
 
 // Save a new podcast to DB
 router.post('/new', PodcastController.saveNewPodcast);
