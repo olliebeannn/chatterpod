@@ -74,30 +74,4 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// GET /:id/podcasts - pull saved podcasts associated with this user
-router.get('/:id/podcasts', async (req, res) => {
-  if (/\D+/.test(req.params.id)) {
-    util.setError(
-      400,
-      `User ID is not formatted correctly; user IDs are numbers`
-    );
-    return util.send(res);
-  }
-
-  try {
-    const userData = await UserService.findUserPodcastsById(req.params.id);
-
-    if (!userData) {
-      util.setError(404, `No user found with that id`);
-      return util.send(res);
-    }
-
-    util.setSuccess(200, `Found user podcast data`, userData);
-    return util.send(res);
-  } catch (e) {
-    util.setError(400, e);
-    return util.send(res);
-  }
-});
-
 export default router;

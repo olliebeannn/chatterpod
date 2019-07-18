@@ -1,4 +1,5 @@
 import PodcastService from '../services/PodcastService';
+import UserService from '../services/UserService';
 import Util from '../utils/Util';
 
 const util = new Util();
@@ -130,6 +131,32 @@ class PodcastController {
       util.setError(400, e);
       return util.send(res);
     }
+  }
+
+  static async getSavedPodcasts(req, res) {
+    if (!req.user) {
+      util.setError(
+        400,
+        `Can't fetch user's saved podcasts when no user is logged in`
+      );
+      return util.send(res);
+    }
+
+    try {
+      const userData = await UserService.findUserPodcastsById(req.user.userId);
+
+      if (!userData) {
+        util.setError(404, `No user found with that id`);
+        return util.send(res);
+      }
+
+      util.setSuccess(200, `Found user podcast data`, userData);
+      return util.send(res);
+    } catch (e) {
+      util.setError(400, e);
+      return util.send(res);
+    }
+    // res.send(200, 'PLACEHOLDER FOR GET SAVED PODCASTS ROUTE');
   }
 }
 
