@@ -72,6 +72,7 @@ class PodcastController {
     try {
       const podcastData = await PodcastService.findPodcastById(req.params.id);
 
+      // NOTE: ADD CODE TO FETCH FROM LISTEN API, STORE IN DB INSTEAD
       if (!podcastData) {
         util.setError(404, `No podcast found with that id`);
         return util.send(res);
@@ -107,6 +108,7 @@ class PodcastController {
       // Check the podcast actually exists
       const podcastData = await PodcastService.findPodcastById(req.params.id);
 
+      // NOTE: ADD CODE TO FETCH FROM LISTEN API, STORE IN DB INSTEAD
       if (!podcastData) {
         util.setError(404, `No podcast found with that id`);
         return util.send(res);
