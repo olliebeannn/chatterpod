@@ -7,6 +7,29 @@ import Util from '../utils/Util';
 const util = new Util();
 
 class PodcastController {
+  // Helper method to pull podcast info from ListenNotes API
+  // Should only be used inside other PodcastController methods
+  static async getPodcastFromApi(id) {
+    let response = await axios.get(
+      `https://listen-api.listennotes.com/api/v2/podcasts/${id}`,
+      {
+        headers: {
+          'X-ListenAPI-Key': process.env.listenAPIKey
+        }
+      }
+    );
+    // console.log('get podcast from api method got repsonse', response);
+
+    if (response.status == 200) {
+      return response.data;
+    }
+    return {
+      error: `Couldn't fetch podcast from Listen API, got response code ${
+        response.status
+      }`
+    };
+  }
+
   static async getAllPodcasts(req, res) {
     try {
       const allPodcasts = await PodcastService.getAllPodcasts();
@@ -70,12 +93,17 @@ class PodcastController {
     }
 
     try {
-      const podcastData = await PodcastService.findPodcastById(req.params.id);
+      // Look for podcast data in DB first
+      let podcastData = await PodcastService.findPodcastById(req.params.id);
 
-      // NOTE: ADD CODE TO FETCH FROM LISTEN API, STORE IN DB INSTEAD
+      // Pull from ListenAPI if that doesn't work
       if (!podcastData) {
-        util.setError(404, `No podcast found with that id`);
-        return util.send(res);
+        podcastData = await PodcastController.getPodcastFromApi(req.params.id);
+
+        if (podcastData.error) {
+          util.setError(400, podcastData.error);
+          return util.send(res);
+        }
       }
 
       util.setSuccess(200, `Found podcast data`, podcastData);
