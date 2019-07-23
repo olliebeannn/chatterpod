@@ -18,16 +18,10 @@ class PodcastController {
         }
       }
     );
-    // console.log('get podcast from api method got repsonse', response);
 
     if (response.status == 200) {
       return response.data;
     }
-    return {
-      error: `Couldn't fetch podcast from Listen API, got response code ${
-        response.status
-      }`
-    };
   }
 
   static async getAllPodcasts(req, res) {
@@ -92,27 +86,33 @@ class PodcastController {
       return util.send(res);
     }
 
+    let podcastData = null;
+
+    // Look for podcast data in DB first
     try {
-      // Look for podcast data in DB first
-      let podcastData = await PodcastService.findPodcastById(req.params.id);
-
-      // Pull from ListenAPI if that doesn't work
-      if (!podcastData) {
-        podcastData = await PodcastController.getPodcastFromApi(req.params.id);
-
-        if (podcastData.error) {
-          util.setError(400, podcastData.error);
-          return util.send(res);
-        }
-      }
-
-      util.setSuccess(200, `Found podcast data`, podcastData);
-      return util.send(res);
+      podcastData = await PodcastService.findPodcastById(req.params.id);
     } catch (e) {
-      console.log('Error getting podcast by id');
+      console.log('Problem getting podcast from DB');
       util.setError(400, e);
       return util.send(res);
     }
+
+    if (podcastData) {
+      util.setSuccess(200, `Found podcast data`, podcastData);
+      return util.send(res);
+    }
+
+    // Pull from ListenAPI if that doesn't work
+    try {
+      podcastData = await PodcastController.getPodcastFromApi(req.params.id);
+    } catch (e) {
+      console.log('Problem getting podcast data from Listen API');
+      util.setError(400, e);
+      return util.send(res);
+    }
+
+    util.setSuccess(200, `Found podcast data`, podcastData);
+    return util.send(res);
   }
 
   // POST /:id - save this podcast to user's favourites, cache if not in DB already
@@ -188,7 +188,6 @@ class PodcastController {
       util.setError(400, e);
       return util.send(res);
     }
-    // res.send(200, 'PLACEHOLDER FOR GET SAVED PODCASTS ROUTE');
   }
 
   static async getTopPodcasts(req, res) {
