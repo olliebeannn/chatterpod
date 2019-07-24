@@ -1,6 +1,6 @@
 # Chatterpod (In Progress)
 
-Chatterpod is a social layer built on top of the podcast-focused ListenNotes API that will let you discover and follow podcasts, and save, rate, and discuss your favourite episodes and podcasts with friends.
+Chatterpod is a social layer built on top of the [ListenNotes podcast search and directory API](https://www.listennotes.com/api/) that will let you discover and follow podcasts, and save, rate, and discuss your favourite episodes and podcasts with friends, and capture your own notes on podcast episodes.
 
 ## Use
 
