@@ -12,4 +12,14 @@ Chatterpod will run on a Heroku server. The back-end REST API is built using Nod
 
 The podcast info is pulled from the ListenNotes API and cached to reduce the number of calls to the API.
 
+## Features
+
+The core set of features will include:
+
+* Searching for podcasts including filtering by genre
+* Viewing podcast details (pulled from ListenNotes API), including its most recent episodes
+* Discovery of the most popular podcasts right now
+* Following podcasts and saving podcast episodes
+* Ratings and comments on podcast episodes 
+
 Designed + developed by [Ollie Khakwani](github.com/olliebeannn)
