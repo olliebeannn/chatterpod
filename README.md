@@ -22,4 +22,26 @@ The core set of features will include:
 * Following podcasts and saving podcast episodes
 * Ratings and comments on podcast episodes 
 
+## Screenshots
+
+Podcasts page:
+
+![Podcasts screen]
+(https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-podcasts.png)
+
+Podcast detail page: 
+
+![Podcast detail screen]
+(https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-podcastDetail.png)
+
+Episodes page:
+
+![Episodes screen]
+(https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-episodes.png)
+
+Episode detail page:
+
+![Episode Detail screen]
+(https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-episodeDetail.png)
+
 Designed + developed by [Ollie Khakwani](github.com/olliebeannn)
