@@ -6,6 +6,8 @@ import Util from '../utils/Util';
 
 const util = new Util();
 
+const MAX_PODCAST_DESCRIPTION_LEN = 1024;
+
 class PodcastController {
   // Helper method to pull podcast info from ListenNotes API
   // Should only be used inside other PodcastController methods
@@ -29,24 +31,47 @@ class PodcastController {
 
     newPodcast.podcastId = podcast.id;
     newPodcast.title = podcast.title;
-    // if (podcast.description) {
-    //   newPodcast.description = podcast.description;
-    // }
+
+    if (podcast.description) {
+      // Make sure description won't overflow
+      if (podcast.description.length > MAX_PODCAST_DESCRIPTION_LEN) {
+        newPodcast.description = podcast.description.substring(
+          0,
+          MAX_PODCAST_DESCRIPTION_LEN - 1
+        );
+      } else {
+        newPodcast.description = podcast.description;
+      }
+    }
+
     if (podcast.thumbnail) {
       newPodcast.thumbnail = podcast.thumbnail;
     }
+
     if (podcast.website) {
       newPodcast.website = podcast.website;
     }
 
     try {
-      let savedPodcast = PodcastService.createPodcast(newPodcast);
-      return savedPodcast;
+      var savedPodcast = await PodcastService.createPodcast(newPodcast);
     } catch (e) {
-      console.log('Problem saving new podcast');
+      console.log('Problem saving new podcast', e);
       util.setError(400, e);
       return util.send(res);
     }
+
+    try {
+      console.log('podcast', podcast.genres_ids);
+      var savedPodcastWithGenres = await savedPodcast.addGenres(
+        podcast.genre_ids
+      );
+    } catch (e) {
+      console.log('Problem saving genres to new podcast', e);
+      util.setError(400, e);
+      return util.send(res);
+    }
+
+    return savedPodcastWithGenres;
   }
 
   static async getAllPodcasts(req, res) {
