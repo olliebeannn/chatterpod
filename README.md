@@ -26,22 +26,21 @@ The core set of features will include:
 
 Podcasts page:
 
-![Podcasts screen]
-(https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-podcasts.png)
+![Podcasts page](https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-podcasts.png)
 
-Podcast detail page: 
 
-![Podcast detail screen]
-(https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-podcastDetail.png)
+Podcast detail page:
+
+![Podcast detail page](https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-podcastDetail.png)
+
 
 Episodes page:
 
-![Episodes screen]
-(https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-episodes.png)
+![Episodes page](https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-episodes.png)
+
 
 Episode detail page:
 
-![Episode Detail screen]
-(https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-episodeDetail.png)
+![Episode detail page](https://github.com/olliebeannn/chatterpod/blob/master/screenshots/chatterpod-episodeDetail.png)
 
 Designed + developed by [Ollie Khakwani](github.com/olliebeannn)
