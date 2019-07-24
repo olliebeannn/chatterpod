@@ -24,6 +24,31 @@ class PodcastController {
     }
   }
 
+  static async savePodcastToDb(podcast) {
+    let newPodcast = {};
+
+    newPodcast.podcastId = podcast.id;
+    newPodcast.title = podcast.title;
+    // if (podcast.description) {
+    //   newPodcast.description = podcast.description;
+    // }
+    if (podcast.thumbnail) {
+      newPodcast.thumbnail = podcast.thumbnail;
+    }
+    if (podcast.website) {
+      newPodcast.website = podcast.website;
+    }
+
+    try {
+      let savedPodcast = PodcastService.createPodcast(newPodcast);
+      return savedPodcast;
+    } catch (e) {
+      console.log('Problem saving new podcast');
+      util.setError(400, e);
+      return util.send(res);
+    }
+  }
+
   static async getAllPodcasts(req, res) {
     try {
       const allPodcasts = await PodcastService.getAllPodcasts();
@@ -107,6 +132,17 @@ class PodcastController {
       podcastData = await PodcastController.getPodcastFromApi(req.params.id);
     } catch (e) {
       console.log('Problem getting podcast data from Listen API');
+      util.setError(400, e);
+      return util.send(res);
+    }
+
+    // console.log('podcastData', podcastData);
+
+    // Save the ListenNotes podcast to the DB
+    try {
+      let savedPodcast = await PodcastController.savePodcastToDb(podcastData);
+    } catch (e) {
+      console.log('Problem saving podcast pulled from ListenAPI to DB');
       util.setError(400, e);
       return util.send(res);
     }
