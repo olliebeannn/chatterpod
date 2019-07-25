@@ -61,7 +61,6 @@ class PodcastController {
     }
 
     try {
-      console.log('podcast', podcast.genres_ids);
       var savedPodcastWithGenres = await savedPodcast.addGenres(
         podcast.genre_ids
       );
@@ -85,7 +84,7 @@ class PodcastController {
       }
       return util.send(res);
     } catch (e) {
-      console.log('error getting all podcasts!');
+      console.log('error getting all podcasts!', e);
       util.setError(400, e);
       return util.send(res);
     }
@@ -142,7 +141,7 @@ class PodcastController {
     try {
       podcastData = await PodcastService.findPodcastById(req.params.id);
     } catch (e) {
-      console.log('Problem getting podcast from DB');
+      console.log('Problem getting podcast from DB', e);
       util.setError(400, e);
       return util.send(res);
     }
@@ -156,18 +155,16 @@ class PodcastController {
     try {
       podcastData = await PodcastController.getPodcastFromApi(req.params.id);
     } catch (e) {
-      console.log('Problem getting podcast data from Listen API');
+      console.log('Problem getting podcast data from Listen API', e);
       util.setError(400, e);
       return util.send(res);
     }
-
-    // console.log('podcastData', podcastData);
 
     // Save the ListenNotes podcast to the DB
     try {
       let savedPodcast = await PodcastController.savePodcastToDb(podcastData);
     } catch (e) {
-      console.log('Problem saving podcast pulled from ListenAPI to DB');
+      console.log('Problem saving podcast pulled from ListenAPI to DB', e);
       util.setError(400, e);
       return util.send(res);
     }
@@ -220,7 +217,7 @@ class PodcastController {
       );
       return util.send(res);
     } catch (e) {
-      console.log('Error saving podcast to user');
+      console.log('Error saving podcast to user', e);
       util.setError(400, e);
       return util.send(res);
     }
