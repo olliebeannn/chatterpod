@@ -11,7 +11,7 @@ import userRoutes from './server/routes/UserRoutes';
 import authRoutes from './server/routes/AuthRoutes';
 import podcastRoutes from './server/routes/PodcastRoutes';
 
-const PORT = process.env.PORT | 5000;
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 // passport.serializeUser((user, done) => {
@@ -87,6 +87,17 @@ app.get('/', (req, res) => {
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/podcasts', podcastRoutes);
+
+if (process.env.NODE_ENV === 'production') {
+  // Make Express serve production assets, e.g. main.js
+  app.use(express.static('client/build'));
+
+  // Make Express serve index.html if it doesn't recognise route
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`App up on port ${PORT}`);
