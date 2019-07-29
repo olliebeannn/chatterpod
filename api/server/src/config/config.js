@@ -1,4 +1,5 @@
-require('dotenv').config();
+// require('dotenv').config();
+require('dotenv-flow').config();
 
 module.exports = {
   // If using onine database
