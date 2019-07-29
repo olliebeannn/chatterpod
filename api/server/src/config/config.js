@@ -29,6 +29,6 @@ module.exports = {
     password: process.env.DB_PASS,
     host: process.env.DB_HOST,
     dialect: 'postgres',
-    use_env_variable: process.env.DATABASE_URL
+    use_env_variable: 'DATABASE_URL'
   }
 };
