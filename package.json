@@ -8,7 +8,7 @@
     "client": "npm run start --prefix client",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "node ./api/index.js"
+    "start": "node -r esm ./api/index.js"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +31,7 @@
     "cookie-session": "^1.3.3",
     "cors": "^2.8.5",
     "dotenv-flow": "^3.0.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^2.0.0",
