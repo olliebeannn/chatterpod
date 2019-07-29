@@ -126,6 +126,7 @@ class PodcastController {
   }
 
   // GET /:id - get this podcast's details if they exist; pull from API if not (and cache?)
+  // CHANGING: pull from API every time, no saving - so we can get episode info
   static async getPodcast(req, res) {
     if (/\W+/.test(req.params.id)) {
       util.setError(
@@ -135,41 +136,18 @@ class PodcastController {
       return util.send(res);
     }
 
-    let podcastData = null;
+    let podcast = null;
 
-    // Look for podcast data in DB first
+    // Pull from ListenAPI
     try {
-      podcastData = await PodcastService.findPodcastById(req.params.id);
-    } catch (e) {
-      console.log('Problem getting podcast from DB', e);
-      util.setError(400, e);
-      return util.send(res);
-    }
-
-    if (podcastData) {
-      util.setSuccess(200, `Found podcast data`, podcastData);
-      return util.send(res);
-    }
-
-    // Pull from ListenAPI if that doesn't work
-    try {
-      podcastData = await PodcastController.getPodcastFromApi(req.params.id);
+      podcast = await PodcastController.getPodcastFromApi(req.params.id);
     } catch (e) {
       console.log('Problem getting podcast data from Listen API', e);
       util.setError(400, e);
       return util.send(res);
     }
 
-    // Save the ListenNotes podcast to the DB
-    try {
-      let savedPodcast = await PodcastController.savePodcastToDb(podcastData);
-    } catch (e) {
-      console.log('Problem saving podcast pulled from ListenAPI to DB', e);
-      util.setError(400, e);
-      return util.send(res);
-    }
-
-    util.setSuccess(200, `Found podcast data`, podcastData);
+    util.setSuccess(200, `Found podcast data`, podcast);
     return util.send(res);
   }
 
@@ -190,32 +168,49 @@ class PodcastController {
       return util.send(res);
     }
 
-    try {
-      // Check the podcast actually exists
-      const podcastData = await PodcastService.findPodcastById(req.params.id);
+    let podcast;
 
-      // NOTE: ADD CODE TO FETCH FROM LISTEN API, STORE IN DB INSTEAD
-      if (!podcastData) {
-        util.setError(404, `No podcast found with that id`);
+    // Check the podcast exists in DB already
+    try {
+      podcast = await PodcastService.findPodcastById(req.params.id);
+    } catch (e) {
+      console.log('Problem getting podcast from DB', e);
+      util.setError(400, e);
+      return util.send(res);
+    }
+
+    // NOTE: Get podcast data from ListenAPI if not in DB, save to DB
+    if (!podcast) {
+      try {
+        var apiPodcastData = await PodcastController.getPodcastFromApi(
+          req.params.id
+        );
+      } catch (e) {
+        console.log('Problem getting podcast data from Listen API', e);
+        util.setError(400, e);
         return util.send(res);
       }
 
-      // Create an association between podcast and user
-      const savedPodcast = await PodcastService.savePodcastToUser(
-        podcastData.podcastId,
+      try {
+        podcast = await PodcastController.savePodcastToDb(apiPodcastData);
+      } catch (e) {
+        console.log('Problem saving podcast pulled from ListenAPI to DB', e);
+        util.setError(400, e);
+        return util.send(res);
+      }
+    }
+
+    // Create an association between this podcast and user
+    try {
+      let updatedPodcast = await PodcastService.savePodcastToUser(
+        req.params.id,
         req.user.userId
       );
 
-      if (savedPodcast) {
-        util.setSuccess(200, `Saved podcast for user`, savedPodcast);
+      if (updatedPodcast) {
+        util.setSuccess(200, `Saved podcast for user`, updatedPodcast);
         return util.send(res);
       }
-
-      util.setError(
-        400,
-        `Error saving podcast to user - couldn't find this podcast in DB`
-      );
-      return util.send(res);
     } catch (e) {
       console.log('Error saving podcast to user', e);
       util.setError(400, e);
