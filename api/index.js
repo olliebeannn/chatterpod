@@ -31,9 +31,9 @@ app.get('/', (req, res) => {
   res.send('Hello world!');
 });
 
-app.use('/auth', authRoutes);
-app.use('/users', userRoutes);
-app.use('/podcasts', podcastRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/podcasts', podcastRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   // Make Express serve production assets, e.g. main.js
