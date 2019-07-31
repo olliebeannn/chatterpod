@@ -6,6 +6,9 @@ import Landing from './Landing/Landing';
 import Podcasts from './Podcasts/Podcasts';
 import Episodes from './Episodes/Episodes';
 
+import '../styles/reset.css';
+import '../styles/base.scss';
+
 function App() {
   return (
     <div className="App">

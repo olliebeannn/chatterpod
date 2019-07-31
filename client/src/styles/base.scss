@@ -1,0 +1,23 @@
+@import './variables.scss';
+
+/* font style defaults */
+
+body {
+  color: $text-color;
+  font-family: $font-primary;
+  line-height: 1.4;
+}
+
+h1 {
+  font-family: $font-secondary;
+  font-size: $font-xl;
+}
+
+h2 {
+  font-family: $font-secondary;
+  font-size: $font-l;
+}
+
+p {
+  font-size: $font-m;
+}
