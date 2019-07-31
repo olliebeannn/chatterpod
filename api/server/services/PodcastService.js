@@ -10,7 +10,7 @@ class PodcastService {
     }
   }
 
-  static async findPodcastById(podcastId) {
+  static async getPodcastFromDb(podcastId) {
     try {
       return await Podcast.findOne({
         where: { podcastId: podcastId },

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import PodcastService from '../services/PodcastService';
 import UserService from '../services/UserService';
+import UserPodcastService from '../services/UserPodcastService';
 import Util from '../utils/Util';
 
 const util = new Util();
@@ -101,7 +102,7 @@ class PodcastController {
     const newPodcast = req.body;
 
     try {
-      const existingPodcast = await PodcastService.findPodcastById(
+      const existingPodcast = await PodcastService.getPodcastFromDb(
         newPodcast.podcastId
       );
 
@@ -168,11 +169,34 @@ class PodcastController {
       return util.send(res);
     }
 
+    // Check if already saved to user, return user_podcasts record if so
+    try {
+      const userPodcast = await UserPodcastService.getUserPodcast(
+        req.user.userId,
+        req.params.id
+      );
+
+      if (userPodcast) {
+        util.setSuccess(
+          200,
+          `User with id ${req.user.userId} has already saved podcast with id ${
+            req.params.id
+          }`,
+          userPodcast
+        );
+        return util.send(res);
+      }
+    } catch (e) {
+      console.log('problem getting user_podcast record', e);
+      util.setError(400, e);
+      return util.send(res);
+    }
+
     let podcast;
 
     // Check the podcast exists in DB already
     try {
-      podcast = await PodcastService.findPodcastById(req.params.id);
+      podcast = await PodcastService.getPodcastFromDb(req.params.id);
     } catch (e) {
       console.log('Problem getting podcast from DB', e);
       util.setError(400, e);
