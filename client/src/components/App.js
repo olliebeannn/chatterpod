@@ -8,15 +8,13 @@ import Episodes from './Episodes/Episodes';
 
 import '../styles/reset.css';
 import '../styles/base.scss';
+import './App.scss';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App container-fluid">
       <BrowserRouter>
         <Header />
-        <a href="/auth/google">
-          <button>Login with Google</button>
-        </a>
         <Route path="/" exact component={Landing} />
         <Route path="/podcasts" component={Podcasts} />
         <Route path="/episodes" component={Episodes} />
