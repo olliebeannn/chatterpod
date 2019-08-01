@@ -15,6 +15,26 @@ const PodcastList = props => {
     }
   ];
 
+  const renderPodcasts = () => {
+    if (props.podcasts) {
+      return props.podcasts.map(
+        ({ podcastId, title, description, thumbnail }) => {
+          return (
+            <PodcastListItem
+              key={podcastId}
+              title={title}
+              description={description}
+              thumbnail={thumbnail}
+              genres={genres}
+            />
+          );
+        }
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
     <div className="PodcastList">
       <PodcastListItem
@@ -24,6 +44,7 @@ const PodcastList = props => {
         key="88b15eefe35d42c58bca9c5e17080661"
         genres={genres}
       />
+      {renderPodcasts()}
     </div>
   );
 };

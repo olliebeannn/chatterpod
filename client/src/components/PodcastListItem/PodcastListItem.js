@@ -26,7 +26,7 @@ const PodcastListItem = props => {
         />
         <div className="PodcastListItem__tags mt2">
           {props.genres.map(genre => {
-            return <Tag text={genre.name} id={genre.id} />;
+            return <Tag text={genre.name} key={genre.id} />;
           })}
         </div>
       </div>
