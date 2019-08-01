@@ -2,7 +2,7 @@
 
 /* PLACEHOLDERS */
 
-/* PLACEHOLDERS - display */
+/* placeholders - display */
 
 %flex {
   display: flex;
@@ -12,10 +12,20 @@
   flex-grow: 1;
 }
 
-/* PLACEHOLDERS - colors */
+/* placeholders - colors */
 
 %primary-color {
   color: $primary-color;
 }
 
-/* mixins */
+%grey-med {
+  color: $grey-med;
+}
+
+/* placeholders - other */
+
+%shadow {
+  box-shadow: 1px;
+}
+
+/* MIXINS */

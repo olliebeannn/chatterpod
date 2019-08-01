@@ -13,7 +13,7 @@ const PodcastListItem = props => {
       <div className="PodcastListItem__content">
         <div className="PodcastListItem__firstLine">
           <h1 className="PodcastListItem__title">{props.title}</h1>
-          <i className="material-icons">bookmark_border</i>
+          <i className="material-icons grey-light">bookmark_border</i>
         </div>
         <p className="PodcastListItem__description">{props.description}</p>
         <div className="PodcastListItem__tags mt2">

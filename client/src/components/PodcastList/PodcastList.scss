@@ -1,0 +1,12 @@
+@import '../../styles/variables.scss';
+@import '../../styles/placeholders.scss';
+
+.PodcastList {
+  margin: 0 $spacing-2;
+}
+
+@media (min-width: 768px) {
+  .PodcastList {
+    margin: 0;
+  }
+}

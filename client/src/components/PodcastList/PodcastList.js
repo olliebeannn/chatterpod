@@ -1,4 +1,5 @@
 import React from 'react';
+import './PodcastList.scss';
 
 import PodcastListItem from '../PodcastListItem/PodcastListItem';
 
