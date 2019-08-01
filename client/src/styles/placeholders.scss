@@ -1,9 +1,21 @@
 @import './variables.scss';
 
-/* placeholders */
+/* PLACEHOLDERS */
+
+/* PLACEHOLDERS - display */
 
 %flex {
   display: flex;
+}
+
+%flex-g-1 {
+  flex-grow: 1;
+}
+
+/* PLACEHOLDERS - colors */
+
+%primary-color {
+  color: $primary-color;
 }
 
 /* mixins */

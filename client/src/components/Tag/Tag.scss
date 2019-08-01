@@ -1,0 +1,11 @@
+@import '../../styles/variables.scss';
+@import '../../styles/placeholders.scss';
+
+.Tag {
+  background-color: lighten($primary-color, 55%);
+  border-radius: 12px;
+  color: $primary-color;
+  font-size: $font-s;
+  height: 24px;
+  padding: $spacing-05 $spacing-1;
+}

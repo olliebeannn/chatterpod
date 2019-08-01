@@ -1,3 +1,8 @@
+@import '../styles/variables.scss';
+@import '../styles/placeholders.scss';
+
 .App {
+  background-color: $grey-extra-light;
+  height: 100vh;
   padding: 0;
 }
