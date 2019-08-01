@@ -1,4 +1,5 @@
 import React from 'react';
+import LinesEllipsis from 'react-lines-ellipsis';
 
 import './PodcastListItem.scss';
 
@@ -15,7 +16,14 @@ const PodcastListItem = props => {
           <h1 className="PodcastListItem__title">{props.title}</h1>
           <i className="material-icons grey-light">bookmark_border</i>
         </div>
-        <p className="PodcastListItem__description">{props.description}</p>
+        <LinesEllipsis
+          className="PodcastListItem__description"
+          text={props.description}
+          maxLine="2"
+          ellipsis="..."
+          trimRight
+          basedOn="letters"
+        />
         <div className="PodcastListItem__tags mt2">
           {props.genres.map(genre => {
             return <Tag text={genre.name} id={genre.id} />;

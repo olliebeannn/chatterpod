@@ -17,7 +17,6 @@ const PodcastList = props => {
 
   return (
     <div className="PodcastList">
-      <p>PodcastList</p>
       <PodcastListItem
         title="Noble Blood"
         description="Author Dana Schwartz explores the stories of some of his…when you’re wearing a crown, mistakes often mean blood."

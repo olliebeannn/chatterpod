@@ -4,17 +4,17 @@
 .PodcastListItem {
   background-color: $white;
   border-radius: 4px;
-  height: 150px;
 
   @extend %flex;
 }
 
 .PodcastListItem__thumbnail {
+  height: 162px;
 }
 
 .PodcastListItem__thumbnail img {
-  height: 154px;
-  width: 154px;
+  height: 100%;
+  width: 162px;
   object-fit: cover;
 }
 
