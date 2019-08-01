@@ -7,7 +7,7 @@ import Tag from '../Tag/Tag';
 
 const PodcastListItem = props => {
   return (
-    <div className="PodcastListItem">
+    <div className="PodcastListItem mt2">
       <div className="PodcastListItem__thumbnail">
         <img src={props.thumbnail} />
       </div>

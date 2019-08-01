@@ -16,8 +16,6 @@ const Podcasts = props => {
       .then(res => setPodcasts(res.data.data.podcasts));
   }, []);
 
-  console.log('podcasts', podcasts);
-
   return (
     <div className="Podcasts">
       <div className="row justify-content-md-center">
