@@ -9,11 +9,18 @@ const PodcastListItem = props => {
   return (
     <div className="PodcastListItem mt2">
       <div className="PodcastListItem__thumbnail">
-        <img src={props.thumbnail} />
+        <img src={props.thumbnail} alt="podcast thumbnail" />
       </div>
       <div className="PodcastListItem__content">
         <div className="PodcastListItem__firstLine">
-          <h1 className="PodcastListItem__title">{props.title}</h1>
+          <LinesEllipsis
+            className="PodcastListItem__title"
+            text={props.title}
+            maxLine="1"
+            ellipsis="..."
+            trimRight
+            basedOn="letters"
+          />
           <i className="material-icons grey-light">bookmark_border</i>
         </div>
         <LinesEllipsis

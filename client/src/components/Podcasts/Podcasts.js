@@ -1,24 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
-import axios from 'axios';
+
 import './Podcasts.scss';
 
 import SavedPodcasts from '../SavedPodcasts/SavedPodcasts';
 import TrendingPodcasts from '../TrendingPodcasts/TrendingPodcasts';
-import PodcastList from '../PodcastList/PodcastList';
 
 const Podcasts = props => {
-  const [podcasts, setPodcasts] = useState();
-
-  // on component mount
-  useEffect(() => {
-    console.log('Hi, this is an effect!');
-
-    axios
-      .get('/api/podcasts/saved')
-      .then(res => setPodcasts(res.data.data.podcasts));
-  }, []);
-
   return (
     <div className="Podcasts">
       <div className="row justify-content-md-center">
@@ -28,7 +16,6 @@ const Podcasts = props => {
             path={`${props.match.path}/trending`}
             component={TrendingPodcasts}
           />
-          <PodcastList podcasts={podcasts} />
         </div>
       </div>
     </div>
