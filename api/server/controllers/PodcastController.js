@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 
 import PodcastService from '../services/PodcastService';
 import UserService from '../services/UserService';
@@ -259,7 +260,7 @@ class PodcastController {
         return util.send(res);
       }
 
-      util.setSuccess(200, `Found user podcast data`, userData);
+      util.setSuccess(200, `Found user podcast data`, userData.podcasts);
       return util.send(res);
     } catch (e) {
       util.setError(400, e);
@@ -268,8 +269,10 @@ class PodcastController {
   }
 
   static async getTopPodcasts(req, res) {
+    let response;
+
     try {
-      let response = await axios.get(
+      response = await axios.get(
         'https://listen-api.listennotes.com/api/v2/best_podcasts?region=us',
         {
           headers: {
@@ -277,13 +280,30 @@ class PodcastController {
           }
         }
       );
-      util.setSuccess(200, 'Got top podcasts', response.data.podcasts);
-      return util.send(res);
     } catch (e) {
       console.log('Error with request to get top podcasts', e);
       util.setError(400, 'There was a problem getting top podcasts');
       return util.send(res);
     }
+
+    // Transform data into same format as podcasts pulled from DB
+    let topPodcasts = [];
+
+    response.data.podcasts.map(podcast => {
+      let newPodcast = _.pick(podcast, [
+        'title',
+        'thumbnail',
+        'website',
+        'description'
+      ]);
+      newPodcast.podcastId = podcast.id;
+
+      // TO ADD: step to add genres to podcast
+      topPodcasts.push(newPodcast);
+    });
+
+    util.setSuccess(200, 'Got top podcasts', topPodcasts);
+    return util.send(res);
   }
 }
 

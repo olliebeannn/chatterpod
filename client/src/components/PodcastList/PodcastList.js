@@ -35,18 +35,7 @@ const PodcastList = props => {
     }
   };
 
-  return (
-    <div className="PodcastList">
-      <PodcastListItem
-        title="TEST"
-        description="Author Dana Schwartz explores the stories of some of his…when you’re wearing a crown, mistakes often mean blood."
-        thumbnail="https://cdn-images-1.listennotes.com/podcasts/noble-blood-iheartradio-oi2LjrdD_vE-bAQak1jR0OK.300x300.jpg"
-        key="88b15eefe35d42c58bca9c5e17080661"
-        genres={genres}
-      />
-      {renderPodcasts()}
-    </div>
-  );
+  return <div className="PodcastList">{renderPodcasts()}</div>;
 };
 
 export default PodcastList;

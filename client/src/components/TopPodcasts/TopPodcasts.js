@@ -3,22 +3,22 @@ import axios from 'axios';
 
 import PodcastList from '../PodcastList/PodcastList';
 
-const SavedPodcasts = props => {
+const TopPodcasts = props => {
   const [podcasts, setPodcasts] = useState();
 
   // on component mount
   useEffect(() => {
     console.log('Hi, this is an effect!');
 
-    axios.get('/api/podcasts/saved').then(res => setPodcasts(res.data.data));
+    axios.get('/api/podcasts/top').then(res => setPodcasts(res.data.data));
   }, []);
 
   return (
     <div>
-      <h1>Saved Podcasts test</h1>
+      <h1>Trending Podcasts test</h1>
       <PodcastList podcasts={podcasts} />
     </div>
   );
 };
 
-export default SavedPodcasts;
+export default TopPodcasts;
