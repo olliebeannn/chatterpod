@@ -1,0 +1,27 @@
+@import '../../styles/variables.scss';
+@import '../../styles/placeholders.scss';
+
+.Subnav {
+  @extend %flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.Subnav__item {
+  margin-right: $spacing-4;
+}
+
+.Subnav__item a {
+  color: $grey-med;
+  text-decoration: none;
+}
+
+.Subnav__item:last-of-type {
+  margin-right: 0;
+}
+
+.Subnav__item a.active {
+  border-bottom: 4px solid $primary-color;
+  color: $primary-color;
+  font-weight: $font-weight-bold;
+}

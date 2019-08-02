@@ -15,7 +15,6 @@ const TopPodcasts = props => {
 
   return (
     <div>
-      <h1>Trending Podcasts test</h1>
       <PodcastList podcasts={podcasts} />
     </div>
   );

@@ -15,7 +15,6 @@ const SavedPodcasts = props => {
 
   return (
     <div>
-      <h1>Saved Podcasts test</h1>
       <PodcastList podcasts={podcasts} />
     </div>
   );
