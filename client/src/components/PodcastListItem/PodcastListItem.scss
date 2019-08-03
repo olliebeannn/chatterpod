@@ -27,12 +27,13 @@
 
 .PodcastListItem__firstLine {
   @extend %flex;
-  color: $primary-color;
-  font-family: $font-secondary;
-  font-size: $font-xl;
-  line-height: 32px;
+  align-items: center;
 }
 
 .PodcastListItem__title {
   @extend %flex-g-1;
+  color: $primary-color;
+  font-family: $font-secondary;
+  font-size: $font-xl;
+  line-height: 32px;
 }

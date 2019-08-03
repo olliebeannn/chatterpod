@@ -22,6 +22,7 @@ const PodcastList = props => {
           return (
             <PodcastListItem
               key={podcastId}
+              podcastId={podcastId}
               title={title}
               description={description}
               thumbnail={thumbnail}

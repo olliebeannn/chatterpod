@@ -13,14 +13,18 @@ const PodcastListItem = props => {
       </div>
       <div className="PodcastListItem__content">
         <div className="PodcastListItem__firstLine">
-          <LinesEllipsis
+          <a
+            href={`/podcasts/detail/${props.podcastId}`}
             className="PodcastListItem__title"
-            text={props.title}
-            maxLine="1"
-            ellipsis="..."
-            trimRight
-            basedOn="letters"
-          />
+          >
+            <LinesEllipsis
+              text={props.title}
+              maxLine="1"
+              ellipsis="..."
+              trimRight
+              basedOn="letters"
+            />
+          </a>
           <i className="material-icons grey-light">bookmark_border</i>
         </div>
         <LinesEllipsis
