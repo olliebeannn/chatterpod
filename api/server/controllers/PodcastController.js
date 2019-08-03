@@ -302,6 +302,21 @@ class PodcastController {
       topPodcasts.push(newPodcast);
     });
 
+    // For these podcasts, check if they're saved to the user; add prop
+    let userSavedPodcastIds = await UserPodcastService.getAllUserPodcasts(
+      req.user.userId
+    );
+    // console.log('userSavedPodcastIds', userSavedPodcastIds);
+
+    // Add data on if logged in user has saved or not to return value
+    topPodcasts.map(podcast => {
+      if (podcast.podcastId in userSavedPodcastIds) {
+        podcast.userSaved = true;
+      } else {
+        podcast.userSaved = false;
+      }
+    });
+
     util.setSuccess(200, 'Got top podcasts', topPodcasts);
     return util.send(res);
   }

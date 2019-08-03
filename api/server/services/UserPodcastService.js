@@ -10,6 +10,20 @@ class UserPodcastService {
       throw e;
     }
   }
+
+  // Fetch IDs for all podcasts for this user; returns array
+  static async getAllUserPodcasts(userId) {
+    try {
+      return await UserPodcast.findAll({
+        where: { userId },
+        attributes: ['podcastId'],
+        raw: true
+      }).map(item => item.podcastId);
+    } catch (e) {
+      console.log(`error getting all user_podcast records for ${userId}`, e);
+      throw e;
+    }
+  }
 }
 
 export default UserPodcastService;
