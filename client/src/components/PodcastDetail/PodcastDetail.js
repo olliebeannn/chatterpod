@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import LinesEllipsis from 'react-lines-ellipsis';
 
+import './PodcastDetail.scss';
+
+import EpisodeList from '../EpisodeList/EpisodeList';
 import Tag from '../Tag/Tag';
 
 const PodcastDetail = props => {
+  const [state, setState] = useState();
+
+  useEffect(() => {
+    console.log('Hi, this is an effect!', props.match.params.id);
+
+    axios
+      .get(`/api/podcasts/${props.match.params.id}`)
+      .then(res => setState(res.data.data));
+  }, []);
+
   const genres = [
     {
       id: 125,
@@ -16,22 +30,27 @@ const PodcastDetail = props => {
     }
   ];
 
-  return (
-    <div className="PodcastDetail">
-      <div className="row justify-content-md-center">
-        <div className="Podcasts__container col-12 col-md-10 col-lg-8">
-          <div className="PodcastDetail__backLink">Back</div>
-          <div className="PodcastDetail__header">
+  const renderContent = () => {
+    if (!state) {
+      return null;
+    } else {
+      return (
+        <>
+          <div className="PodcastDetail__header mt2">
             <div className="PodcastDetail__thumbnail">
-              <img src={props.thumbnail} alt="podcast thumbnail" />
+              <img src={state.thumbnail} alt="podcast thumbnail" />
             </div>
             <div className="PodcastDetail__content">
               <div className="PodcastDetail__firstLine">
-                <LinesEllipsis />
+                <LinesEllipsis
+                  text={state.title}
+                  className="PodcastDetail__title"
+                />
                 <i className="material-icons grey-light">bookmark_border</i>
-                <div className="PodcastDetail__rating">Rating</div>
               </div>
-              <div className="PodcastDetail__description">Description</div>
+              <div className="PodcastDetail__description">
+                {state.description}
+              </div>
               <div className="PodcastDetail__tags mt2">
                 {genres.map(genre => {
                   return <Tag text={genre.name} key={genre.id} />;
@@ -39,6 +58,22 @@ const PodcastDetail = props => {
               </div>
             </div>
           </div>
+          <EpisodeList episodes={state.episodes} />
+        </>
+      );
+    }
+  };
+
+  return (
+    <div className="PodcastDetail">
+      <div className="row justify-content-md-center">
+        <div className="Podcasts__container col-12 col-md-10 col-lg-8">
+          <div className="PodcastDetail__backLink mt2">
+            <a href="#" onClick={() => props.history.goBack()}>
+              ← Back
+            </a>
+          </div>
+          {renderContent()}
         </div>
       </div>
     </div>
