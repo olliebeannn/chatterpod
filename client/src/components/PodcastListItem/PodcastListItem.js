@@ -6,6 +6,14 @@ import './PodcastListItem.scss';
 import Tag from '../Tag/Tag';
 
 const PodcastListItem = props => {
+  const showBookmarkIcon = () => {
+    if (props.userSaved) {
+      return <i className="material-icons primary-color">bookmark</i>;
+    } else {
+      return <i className="material-icons grey-light">bookmark_border</i>;
+    }
+  };
+
   return (
     <div className="PodcastListItem mt2">
       <div className="PodcastListItem__thumbnail">
@@ -25,7 +33,7 @@ const PodcastListItem = props => {
               basedOn="letters"
             />
           </a>
-          <i className="material-icons grey-light">bookmark_border</i>
+          {showBookmarkIcon()}
         </div>
         <LinesEllipsis
           className="PodcastListItem__description"

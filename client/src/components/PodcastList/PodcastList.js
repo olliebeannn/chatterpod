@@ -18,7 +18,7 @@ const PodcastList = props => {
   const renderPodcasts = () => {
     if (props.podcasts) {
       return props.podcasts.map(
-        ({ podcastId, title, description, thumbnail }) => {
+        ({ podcastId, title, description, thumbnail, userSaved }) => {
           return (
             <PodcastListItem
               key={podcastId}
@@ -27,6 +27,7 @@ const PodcastList = props => {
               description={description}
               thumbnail={thumbnail}
               genres={genres}
+              userSaved={userSaved}
             />
           );
         }
