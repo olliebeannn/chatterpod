@@ -196,7 +196,14 @@ class PodcastController {
         return util.send(res);
       }
 
-      util.setSuccess(200, `Found user podcast data`, userData.podcasts);
+      // Add field for userSaved = true to all
+      let podcasts = _.cloneDeep(JSON.parse(JSON.stringify(userData.podcasts)));
+
+      podcasts.map(podcast => {
+        podcast.userSaved = true;
+      });
+
+      util.setSuccess(200, `Found user podcast data`, podcasts);
       return util.send(res);
     } catch (e) {
       util.setError(400, e);

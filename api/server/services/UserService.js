@@ -51,7 +51,7 @@ class UserService {
         include: ['podcasts']
       });
 
-      console.log('userData', userData);
+      // console.log('userData', userData);
 
       if (userData) {
         return userData;
