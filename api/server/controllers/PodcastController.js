@@ -11,70 +11,6 @@ const util = new Util();
 const MAX_PODCAST_DESCRIPTION_LEN = 1024;
 
 class PodcastController {
-  // Helper method to pull podcast info from ListenNotes API
-  // Should only be used inside other PodcastController methods
-  static async getPodcastFromApi(id) {
-    let response = await axios.get(
-      `https://listen-api.listennotes.com/api/v2/podcasts/${id}`,
-      {
-        headers: {
-          'X-ListenAPI-Key': process.env.listenAPIKey
-        }
-      }
-    );
-
-    if (response.status == 200) {
-      return response.data;
-    }
-  }
-
-  static async savePodcastToDb(podcast) {
-    let newPodcast = {};
-
-    newPodcast.podcastId = podcast.id;
-    newPodcast.title = podcast.title;
-
-    if (podcast.description) {
-      // Make sure description won't overflow
-      if (podcast.description.length > MAX_PODCAST_DESCRIPTION_LEN) {
-        newPodcast.description = podcast.description.substring(
-          0,
-          MAX_PODCAST_DESCRIPTION_LEN - 1
-        );
-      } else {
-        newPodcast.description = podcast.description;
-      }
-    }
-
-    if (podcast.thumbnail) {
-      newPodcast.thumbnail = podcast.thumbnail;
-    }
-
-    if (podcast.website) {
-      newPodcast.website = podcast.website;
-    }
-
-    try {
-      var savedPodcast = await PodcastService.createPodcast(newPodcast);
-    } catch (e) {
-      console.log('Problem saving new podcast', e);
-      util.setError(400, e);
-      return util.send(res);
-    }
-
-    try {
-      var savedPodcastWithGenres = await savedPodcast.addGenres(
-        podcast.genre_ids
-      );
-    } catch (e) {
-      console.log('Problem saving genres to new podcast', e);
-      util.setError(400, e);
-      return util.send(res);
-    }
-
-    return savedPodcastWithGenres;
-  }
-
   static async getAllPodcasts(req, res) {
     try {
       const allPodcasts = await PodcastService.getAllPodcasts();
@@ -142,7 +78,7 @@ class PodcastController {
 
     // Pull from ListenAPI
     try {
-      podcast = await PodcastController.getPodcastFromApi(req.params.id);
+      podcast = await PodcastService.getPodcastFromApi(req.params.id);
     } catch (e) {
       console.log('Problem getting podcast data from Listen API', e);
       util.setError(400, e);
@@ -207,7 +143,7 @@ class PodcastController {
     // NOTE: Get podcast data from ListenAPI if not in DB, save to DB
     if (!podcast) {
       try {
-        var apiPodcastData = await PodcastController.getPodcastFromApi(
+        var apiPodcastData = await PodcastService.getPodcastFromApi(
           req.params.id
         );
       } catch (e) {
@@ -217,7 +153,7 @@ class PodcastController {
       }
 
       try {
-        podcast = await PodcastController.savePodcastToDb(apiPodcastData);
+        podcast = await PodcastService.savePodcastToDb(apiPodcastData);
       } catch (e) {
         console.log('Problem saving podcast pulled from ListenAPI to DB', e);
         util.setError(400, e);
