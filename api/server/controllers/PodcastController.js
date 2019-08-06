@@ -85,6 +85,24 @@ class PodcastController {
       return util.send(res);
     }
 
+    // Check if podcast was saved for this user, if so, add userSaved = true to response
+    if (req.user) {
+      try {
+        var userPodcast = await UserPodcastService.getUserPodcast(
+          req.user.userId,
+          req.params.id
+        );
+      } catch (e) {
+        console.log('Problem getting user-podcast data from db', e);
+      }
+
+      if (userPodcast) {
+        podcast.userSaved = true;
+      } else {
+        podcast.userSaved = false;
+      }
+    }
+
     util.setSuccess(200, `Found podcast data`, podcast);
     return util.send(res);
   }

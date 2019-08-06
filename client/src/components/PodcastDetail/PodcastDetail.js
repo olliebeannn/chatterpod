@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import LinesEllipsis from 'react-lines-ellipsis';
 
@@ -19,6 +18,7 @@ const PodcastDetail = props => {
       .then(res => setState(res.data.data));
   }, []);
 
+  // Hard coded genres for now
   const genres = [
     {
       id: 125,
@@ -29,6 +29,14 @@ const PodcastDetail = props => {
       name: 'Society & Culture'
     }
   ];
+
+  const showBookmarkIcon = () => {
+    if (state.userSaved) {
+      return <i className="material-icons primary-color">bookmark</i>;
+    } else {
+      return <i className="material-icons grey-light">bookmark_border</i>;
+    }
+  };
 
   const renderContent = () => {
     if (!state) {
@@ -46,7 +54,7 @@ const PodcastDetail = props => {
                   text={state.title}
                   className="PodcastDetail__title"
                 />
-                <i className="material-icons grey-light">bookmark_border</i>
+                {showBookmarkIcon()}
               </div>
               <div className="PodcastDetail__description">
                 {state.description}
