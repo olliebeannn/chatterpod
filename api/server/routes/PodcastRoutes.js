@@ -18,5 +18,7 @@ router.post('/new', PodcastController.saveNewPodcast);
 router.get('/:id', PodcastController.getPodcast);
 // Save podcast with this ID to the logged in user
 router.get('/:id/save', PodcastController.savePodcastToUser);
+// Remove podcast with this ID from the logged in user
+router.get('/:id/remove', PodcastController.removePodcastFromUser);
 
 export default router;

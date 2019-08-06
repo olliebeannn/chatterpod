@@ -179,6 +179,46 @@ class PodcastController {
     }
   }
 
+  // Removes association between podcast and logged in user
+  static async removePodcastFromUser(req, res) {
+    // Check the podcastId is well formatted
+    if (/\W+/.test(req.params.id)) {
+      util.setError(
+        400,
+        `PodcastID is not formatted correctly; it should only contain alphanumeric chars`
+      );
+      return util.send(res);
+    }
+
+    // Check there is a logged in user
+    if (!req.user) {
+      util.setError(400, `No user logged in, can't save podcast`);
+      return util.send(res);
+    }
+
+    // Remove the podcast and return response from DB
+    try {
+      let dbResponse = await UserPodcastService.removeUserPodcast(
+        req.user.userId,
+        req.params.id
+      );
+
+      util.setSuccess(
+        200,
+        `Removed podcast with id ${req.params.id} from user with id ${
+          req.user.userId
+        }`,
+        dbResponse
+      );
+      return util.send(res);
+    } catch (e) {
+      console.log('Error removing podcast from user', e);
+      util.setError(400, e);
+      return util.send(res);
+    }
+  }
+
+  // Gets all podcasts that this user has saved
   static async getSavedPodcasts(req, res) {
     if (!req.user) {
       util.setError(
