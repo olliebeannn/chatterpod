@@ -26,6 +26,16 @@ class EpisodeService {
       throw e;
     }
   }
+
+  // STUB: pullEpisodesForUser(userId) - from DB
+
+  // STUB: fetchEpisode(episodeId) - from API
+
+  // STUB: saveEpisode(episodeData)
+
+  // STUB: saveEpisodeToUser(episodeId, userId)
+
+  // STUB: removeEpisodeFromUser(episodeId, userId)
 }
 
 export default EpisodeService;

@@ -11,7 +11,8 @@ class UserPodcastService {
     }
   }
 
-  // Fetch IDs for all podcasts for this user; returns array
+  // Rename pullSavedPodcastIdsForUser(userId). Move to userService?
+  // Pull IDs for all podcasts for this user; returns array
   static async getAllUserPodcasts(userId) {
     try {
       return await UserPodcast.findAll({

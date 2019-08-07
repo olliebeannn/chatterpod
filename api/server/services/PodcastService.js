@@ -4,6 +4,7 @@ import database from '../src/models';
 const Podcast = database.podcast;
 
 class PodcastService {
+  // Rename pullAllPodcasts
   static async getAllPodcasts() {
     try {
       return await Podcast.findAll();
@@ -12,6 +13,7 @@ class PodcastService {
     }
   }
 
+  // Rename pullPodcast
   static async getPodcastFromDb(podcastId) {
     try {
       return await Podcast.findOne({
@@ -24,6 +26,7 @@ class PodcastService {
   }
 
   // Doesn't check for existence of podcast before creating; use findPodcastById first
+  // TO REMOVE: just use raw call in savePodcastToDb
   static async createPodcast(newPodcast) {
     try {
       return await Podcast.create(newPodcast);
@@ -45,6 +48,9 @@ class PodcastService {
     }
   }
 
+  // STUB: move removePodcastFromUser(podcastId, userId)
+
+  // Rename fetchPodcast for all API calls
   static async getPodcastFromApi(id) {
     let response = await axios.get(
       `https://listen-api.listennotes.com/api/v2/podcasts/${id}`,
@@ -60,6 +66,7 @@ class PodcastService {
     }
   }
 
+  // Assumes it's receiving data from ListenAPI
   static async savePodcastToDb(podcast) {
     let newPodcast = {};
 

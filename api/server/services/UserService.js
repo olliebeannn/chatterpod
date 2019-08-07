@@ -2,6 +2,7 @@ import database from '../src/models';
 const User = database.user;
 
 class UserService {
+  // rename pullAllUsers()
   static async getAllUsers() {
     try {
       return await User.findAll();
@@ -10,6 +11,7 @@ class UserService {
     }
   }
 
+  // rename pullUserByEmail()
   static async findUserByEmail(email) {
     try {
       const existingUser = await User.findOne({
@@ -26,6 +28,7 @@ class UserService {
     }
   }
 
+  // rename pullUser()
   static async findUserById(id) {
     try {
       const existingUser = await User.findOne({
@@ -42,6 +45,7 @@ class UserService {
     }
   }
 
+  // rename pullPodcastsForUser(userId)
   static async findUserPodcastsById(id) {
     try {
       console.log('findUserPodcastsById');
@@ -63,6 +67,7 @@ class UserService {
     }
   }
 
+  // rename saveUser, make it check if they exist already?
   static async createUser(newUser) {
     try {
       return await User.create(newUser);

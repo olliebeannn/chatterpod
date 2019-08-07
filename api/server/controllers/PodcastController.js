@@ -11,6 +11,7 @@ const util = new Util();
 const MAX_PODCAST_DESCRIPTION_LEN = 1024;
 
 class PodcastController {
+  // RENAME pullAllPodcasts
   static async getAllPodcasts(req, res) {
     try {
       const allPodcasts = await PodcastService.getAllPodcasts();
@@ -28,6 +29,7 @@ class PodcastController {
     }
   }
 
+  // RENAME savePodcast
   static async saveNewPodcast(req, res) {
     if (!req.body.podcastId | !req.body.title) {
       util.setError(
@@ -63,8 +65,8 @@ class PodcastController {
     }
   }
 
-  // GET /:id - get this podcast's details if they exist; pull from API if not (and cache?)
   // CHANGING: pull from API every time, no saving - so we can get episode info
+  // RENAME fetchPodcast
   static async getPodcast(req, res) {
     if (/\W+/.test(req.params.id)) {
       util.setError(
@@ -237,6 +239,7 @@ class PodcastController {
   }
 
   // Gets all podcasts that this user has saved
+  // RENAME pullsavedPodcasts
   static async getSavedPodcasts(req, res) {
     if (!req.user) {
       util.setError(
@@ -269,6 +272,7 @@ class PodcastController {
     }
   }
 
+  // RENAME fetchTopPodcasts
   static async getTopPodcasts(req, res) {
     let response;
 
