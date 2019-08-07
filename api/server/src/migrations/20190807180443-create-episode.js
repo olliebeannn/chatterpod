@@ -2,7 +2,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('episodes', {
-      epsiodeId: {
+      episodeId: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING
