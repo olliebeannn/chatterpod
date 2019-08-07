@@ -8,6 +8,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 import userRoutes from './server/routes/UserRoutes';
 import authRoutes from './server/routes/AuthRoutes';
 import podcastRoutes from './server/routes/PodcastRoutes';
+import episodeRoutes from './server/routes/episodeRoutes';
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/podcasts', podcastRoutes);
+app.use('/api/episodes', episodeRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   // Make Express serve production assets, e.g. main.js
