@@ -33,6 +33,18 @@
   @extend %flex;
 }
 
-.Header__item:last-of-type {
-  margin-left: auto;
+.Header__userPhotoWrapper {
+  border-radius: 50%;
+  height: 32px;
+  overflow: hidden;
+  width: 32px;
+}
+
+.Header__userPhoto {
+  height: 100%;
+  width: 100%;
+}
+
+.Header__user {
+  color: $white;
 }

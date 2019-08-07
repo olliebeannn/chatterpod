@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import * as actions from '../actions';
 
 import Header from './Header/Header';
 import Landing from './Landing/Landing';
@@ -11,7 +14,11 @@ import '../styles/reset.css';
 import '../styles/base.scss';
 import './App.scss';
 
-function App() {
+function App(props) {
+  useEffect(() => {
+    props.fetchUser();
+  }, []);
+
   return (
     <div className="App container-fluid">
       <BrowserRouter>
@@ -27,4 +34,7 @@ function App() {
   );
 }
 
-export default App;
+export default connect(
+  null,
+  actions
+)(App);

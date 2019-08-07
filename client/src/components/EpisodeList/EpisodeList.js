@@ -8,6 +8,7 @@ const EpisodeList = props => {
       {props.episodes.map(episode => {
         return (
           <EpisodeListItem
+            key={episode.id}
             id={episode.id}
             title={episode.title}
             description={episode.description}
