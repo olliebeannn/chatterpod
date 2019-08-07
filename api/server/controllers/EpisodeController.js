@@ -4,9 +4,9 @@ import Util from '../utils/Util';
 const util = new Util();
 
 class EpisodeController {
-  static async getAllEpisodes(req, res) {
+  static async pullAllEpisodes(req, res) {
     try {
-      const allEpisodes = await EpisodeService.getAllEpisodes();
+      const allEpisodes = await EpisodeService.pullAllEpisodes();
 
       if (allEpisodes.length > 0) {
         util.setSuccess(200, 'Episodes retrieved', allEpisodes);
@@ -17,6 +17,25 @@ class EpisodeController {
       util.send(res);
     } catch (e) {
       console.log('Problem pulling all episodes from DB', e);
+      util.setError(400, e);
+      return util.send(res);
+    }
+  }
+
+  static async pullEpisodeWithPodcast(req, res) {
+    try {
+      const episode = await EpisodeService.pullEpisodeWithPodcast(
+        req.params.id
+      );
+
+      util.setSuccess(
+        200,
+        `Pulled episode with id ${req.params.id} from db`,
+        episode
+      );
+      return util.send(res);
+    } catch (e) {
+      console.log(`Problem pulling episode with id ${id} from DB`, e);
       util.setError(400, e);
       return util.send(res);
     }

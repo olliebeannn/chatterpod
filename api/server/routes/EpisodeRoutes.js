@@ -5,6 +5,9 @@ import EpisodeController from '../controllers/EpisodeController';
 const router = Router();
 
 // Pull all episodes cached in db; NOT user facing
-router.get('/', EpisodeController.getAllEpisodes);
+router.get('/', EpisodeController.pullAllEpisodes);
+
+// Pull episode with podcast info
+router.get('/:id', EpisodeController.pullEpisodeWithPodcast);
 
 export default router;
