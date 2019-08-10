@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import database from '../src/models';
 const Episode = database.episode;
+const User = database.user;
 
 class EpisodeService {
   static async pullAllEpisodes() {
@@ -28,8 +29,40 @@ class EpisodeService {
   }
 
   // STUB: pullEpisodesForUser(userId) - from DB
+  static async pullEpisodesForUser(userId) {
+    try {
+      return await User.find({
+        where: { userId },
+        include: ['epsiodes']
+      });
+    } catch (e) {
+      console.log(`problem getting user podcasts for userId ${userId}`, e);
+      throw e;
+    }
+  }
 
   // STUB: fetchEpisode(episodeId) - from API
+  static async fetchEpisode(episodeId) {
+    try {
+      let response = await axios.get(
+        `https://listen-api.listennotes.com/api/v2/episodes/${episodeId}`,
+        {
+          headers: {
+            'X-ListenAPI-Key': process.env.listenAPIKey
+          }
+        }
+      );
+
+      if (response.status == 200) {
+        return response.data;
+      }
+    } catch (e) {
+      console.log(
+        `error getting episode with id ${episodeId} from ListenNotes API`
+      );
+      throw e;
+    }
+  }
 
   // STUB: saveEpisode(episodeData)
 
