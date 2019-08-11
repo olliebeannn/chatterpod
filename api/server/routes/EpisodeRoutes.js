@@ -7,7 +7,10 @@ const router = Router();
 // Pull all episodes cached in db; NOT user facing
 router.get('/', EpisodeController.pullAllEpisodes);
 
-// Pull episode with podcast info
-router.get('/:id', EpisodeController.pullEpisodeWithPodcast);
+// Fetch episode details from API
+router.get('/:id', EpisodeController.fetchEpisode);
+
+// Pull episode from DB with podcast info (TEST ROUTE)
+router.get('/test/:id', EpisodeController.pullEpisodeWithPodcast);
 
 export default router;

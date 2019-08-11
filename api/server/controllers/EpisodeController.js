@@ -40,6 +40,26 @@ class EpisodeController {
       return util.send(res);
     }
   }
+
+  static async fetchEpisode(req, res) {
+    try {
+      const episode = await EpisodeService.fetchEpisode(req.params.id);
+
+      util.setSuccess(
+        200,
+        `Pulled episode with id ${req.params.id} from api`,
+        episode
+      );
+      return util.send(res);
+    } catch (e) {
+      console.log(
+        `Problem pulling episode with id ${id} from ListenNotes API`,
+        e
+      );
+      util.setError(400, e);
+      return util.send(res);
+    }
+  }
 }
 
 export default EpisodeController;
