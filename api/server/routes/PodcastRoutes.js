@@ -2,6 +2,7 @@ import { Router } from 'express';
 import PodcastController from '../controllers/PodcastController';
 
 import requireLogin from '../middlewares/requireLogin';
+import checkIdFormat from '../middlewares/checkIdFormat';
 
 const router = Router();
 
@@ -17,10 +18,14 @@ router.get('/top', PodcastController.getTopPodcasts);
 router.post('/new', PodcastController.saveNewPodcast);
 
 // Get podcast by ID
-router.get('/:id', PodcastController.getPodcast);
+router.get('/:id', checkIdFormat, PodcastController.getPodcast);
 // Save podcast with this ID to the logged in user
-router.get('/:id/save', PodcastController.savePodcastToUser);
+router.get('/:id/save', checkIdFormat, PodcastController.savePodcastToUser);
 // Remove podcast with this ID from the logged in user
-router.get('/:id/remove', PodcastController.removePodcastFromUser);
+router.get(
+  '/:id/remove',
+  checkIdFormat,
+  PodcastController.removePodcastFromUser
+);
 
 export default router;
