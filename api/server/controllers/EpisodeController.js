@@ -62,15 +62,22 @@ class EpisodeController {
   }
 
   // FAILED ATTEMPT TO TEST NEW ROUTE TO SAVE EPISODE DATA
-  // static async saveEpisode(req, res) {
-  //   try {
-  //     console.log('res', res.body);
-  //   } catch (e) {
-  //     console.log(`error saving episode with id ${req.params.id}`, e);
-  //     util.setError(400, e);
-  //     return util.send(res);
-  //   }
-  // }
+  static async saveEpisode(req, res) {
+    try {
+      const episode = await EpisodeService.saveEpisode(req.body);
+
+      util.setSuccess(
+        200,
+        `Saved episode with id ${req.body.id} from api`,
+        episode
+      );
+      return util.send(res);
+    } catch (e) {
+      console.log(`error saving episode with id ${req.params.id}`, e);
+      util.setError(400, e);
+      return util.send(res);
+    }
+  }
 }
 
 export default EpisodeController;

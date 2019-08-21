@@ -22,5 +22,6 @@ router.get(
 
 // FAILED TEST ROUTE: save episode with this :id to db
 // router.get('/test/:id/save', checkIdFormat, EpisodeController.saveEpisode);
+router.post('/new', EpisodeController.saveEpisode);
 
 export default router;
