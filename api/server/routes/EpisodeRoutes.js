@@ -20,4 +20,7 @@ router.get(
   EpisodeController.pullEpisodeWithPodcast
 );
 
+// FAILED TEST ROUTE: save episode with this :id to db
+// router.get('/test/:id/save', checkIdFormat, EpisodeController.saveEpisode);
+
 export default router;

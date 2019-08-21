@@ -29,7 +29,7 @@ class PodcastController {
     }
   }
 
-  // RENAME savePodcast
+  // RENAME savePodcast, uses a POST request
   static async saveNewPodcast(req, res) {
     if (!req.body.podcastId | !req.body.title) {
       util.setError(
