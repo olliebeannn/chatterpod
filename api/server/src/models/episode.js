@@ -45,6 +45,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'podcastId',
       targetKey: 'podcastId'
     });
+
+    Episode.belongsToMany(models.user, {
+      through: 'user_episode',
+      foreignKey: 'episodeId'
+    });
   };
   return Episode;
 };

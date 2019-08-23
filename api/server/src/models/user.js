@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       through: 'user_podcast',
       foreignKey: 'userId'
     });
+
+    User.belongsToMany(models.episode, {
+      through: 'user_episode',
+      foreignKey: 'userId'
+    });
   };
   return User;
 };
