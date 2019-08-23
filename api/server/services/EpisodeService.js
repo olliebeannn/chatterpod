@@ -14,8 +14,7 @@ class EpisodeService {
     }
   }
 
-  // STUB: pullEpisode(episodeId) - just pull episode without podcast data
-  // Use in saveEpisode if findOrCreate won't work
+  // pullEpisode(episodeId) - just pull episode without podcast data from DB
   static async pullEpisode(episodeId) {
     try {
       return await Episode.findOne({ where: { episodeId } });
@@ -40,11 +39,12 @@ class EpisodeService {
   }
 
   // STUB: pullEpisodesForUser(userId) - from DB
+  // Should this be in UserService?
   static async pullEpisodesForUser(userId) {
     try {
       return await User.find({
         where: { userId },
-        include: ['epsiodes']
+        include: ['episodes']
       });
     } catch (e) {
       console.log(`problem getting user podcasts for userId ${userId}`, e);
@@ -52,7 +52,7 @@ class EpisodeService {
     }
   }
 
-  // STUB: fetchEpisode(episodeId) - from API
+  // Fetch episode data from API
   static async fetchEpisode(episodeId) {
     try {
       let response = await axios.get(
@@ -77,30 +77,6 @@ class EpisodeService {
 
   // saveEpisode(episodeData) - save API-formatted episode data to DB
   static async saveEpisodeFromApi(episodeData) {
-    // findOrCreate version of function; poor error reporting
-    // Episode.findOrCreate({
-    //   where: {
-    //     episodeId: episodeData.id
-    //   },
-    //   defaults: {
-    //     title: episodeData.title,
-    //     description: episodeData.description,
-    //     thumbnail: episodeData.thumbnail,
-    //     listennotesURL: episodeData.listennotes_url,
-    //     audioURL: episodeData.audio,
-    //     pubDate_ms: episodeData.pub_date_ms,
-    //     length_s: episodeData.audio_length_sec,
-    //     podcastId: episodeData.podcast.id
-    //   }
-    // })
-    //   .then(([episode, created]) => {
-    //     console.log('new episode created?', created);
-    //     return episode;
-    //   })
-    //   .catch(e => {
-    //     console.log(`problem creating episode with id ${episodeData.id}`);
-    //   });
-
     // Version using standard find, then create if not found;
     // Verbose but better error reporting
     try {
@@ -132,6 +108,30 @@ class EpisodeService {
       console.log(`problem creating episode with id ${episodeData.id}`);
       throw e;
     }
+
+    // findOrCreate version of function; poor error reporting
+    // Episode.findOrCreate({
+    //   where: {
+    //     episodeId: episodeData.id
+    //   },
+    //   defaults: {
+    //     title: episodeData.title,
+    //     description: episodeData.description,
+    //     thumbnail: episodeData.thumbnail,
+    //     listennotesURL: episodeData.listennotes_url,
+    //     audioURL: episodeData.audio,
+    //     pubDate_ms: episodeData.pub_date_ms,
+    //     length_s: episodeData.audio_length_sec,
+    //     podcastId: episodeData.podcast.id
+    //   }
+    // })
+    //   .then(([episode, created]) => {
+    //     console.log('new episode created?', created);
+    //     return episode;
+    //   })
+    //   .catch(e => {
+    //     console.log(`problem creating episode with id ${episodeData.id}`);
+    //   });
   }
 
   // STUB: saveEpisodeToUser(episodeId, userId)
