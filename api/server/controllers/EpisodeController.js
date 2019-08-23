@@ -61,8 +61,8 @@ class EpisodeController {
     }
   }
 
-  // FAILED ATTEMPT TO TEST NEW ROUTE TO SAVE EPISODE DATA
-  static async saveEpisode(req, res) {
+  // TEST of saveEpisodeFromApi in EpisodeService
+  static async saveEpisodeFromApi(req, res) {
     try {
       const episode = await EpisodeService.saveEpisode(req.body);
 

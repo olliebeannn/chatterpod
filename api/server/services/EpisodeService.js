@@ -75,8 +75,8 @@ class EpisodeService {
     }
   }
 
-  // saveEpisode(episodeData) - save properly formatted episode data to DB
-  static async saveEpisode(episodeData) {
+  // saveEpisode(episodeData) - save API-formatted episode data to DB
+  static async saveEpisodeFromApi(episodeData) {
     // findOrCreate version of function; poor error reporting
     // Episode.findOrCreate({
     //   where: {
