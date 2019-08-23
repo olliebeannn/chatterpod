@@ -15,7 +15,7 @@ module.exports = {
       thumbnail: Sequelize.STRING,
       listennotesURL: Sequelize.STRING,
       audioURL: Sequelize.STRING,
-      pubDate_ms: Sequelize.INTEGER,
+      pubDate_ms: Sequelize.BIGINT,
       length_s: Sequelize.INTEGER,
       podcastId: {
         type: Sequelize.STRING,
