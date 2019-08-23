@@ -75,24 +75,14 @@ class EpisodeService {
     }
   }
 
-  // STUB: saveEpisode(episodeData) - save properly formatted episode data to DB
+  // saveEpisode(episodeData) - save properly formatted episode data to DB
   static async saveEpisode(episodeData) {
-    try {
-      var episode = await EpisodeService.pullEpisode(episodeData.id);
-    } catch (e) {
-      console.log(
-        `problem searching database for episode with id ${episodeData.id}`,
-        e
-      );
-      throw e;
-    }
-
-    // Return episode if exists in db
-    if (episode) return episode;
-
-    try {
-      return await Episode.create({
-        episodeId: episodeData.id,
+    // findOrCreate version of function
+    Episode.findOrCreate({
+      where: {
+        episodeId: episodeData.id
+      },
+      defaults: {
         title: episodeData.title,
         description: episodeData.description,
         thumbnail: episodeData.thumbnail,
@@ -100,17 +90,33 @@ class EpisodeService {
         audioURL: episodeData.audio,
         pubDate_ms: episodeData.pub_date_ms,
         length_s: episodeData.audio_length_sec
+      }
+    })
+      .then(([episode, created]) => {
+        console.log('new episode created?', created);
+        return episode;
+      })
+      .catch(e => {
+        console.log(`problem creating episode with id ${episodeData.id}`);
       });
-    } catch (e) {
-      console.log(`problem creating episode with id ${episodeData.id}`);
-      throw e;
-    }
 
-    // Episode.findOrCreate({
-    //   where: {
-    //     episodeId: episodeData.id
-    //   },
-    //   defaults: {
+    // Regular find version of function; better error reporting, but less efficient
+    // try {
+    //   var episode = await EpisodeService.pullEpisode(episodeData.id);
+    // } catch (e) {
+    //   console.log(
+    //     `problem searching database for episode with id ${episodeData.id}`,
+    //     e
+    //   );
+    //   throw e;
+    // }
+    //
+    // // Return episode if exists in db
+    // if (episode) return episode;
+    //
+    // try {
+    //   return await Episode.create({
+    //     episodeId: episodeData.id,
     //     title: episodeData.title,
     //     description: episodeData.description,
     //     thumbnail: episodeData.thumbnail,
@@ -118,15 +124,11 @@ class EpisodeService {
     //     audioURL: episodeData.audio,
     //     pubDate_ms: episodeData.pub_date_ms,
     //     length_s: episodeData.audio_length_sec
-    //   }
-    // })
-    //   .then(([episode, created]) => {
-    //     console.log('new episode created?', created);
-    //     return episode;
-    //   })
-    //   .catch(e => {
-    //     console.log(`problem creating episode with id ${episodeData.id}`);
     //   });
+    // } catch (e) {
+    //   console.log(`problem creating episode with id ${episodeData.id}`);
+    //   throw e;
+    // }
   }
 
   // STUB: saveEpisodeToUser(episodeId, userId)
