@@ -33,7 +33,7 @@
     "cors": "^2.8.5",
     "dotenv-flow": "^3.0.0",
     "esm": "^3.2.25",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "lodash": "^4.17.15",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^2.0.0",
